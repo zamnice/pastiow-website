@@ -1,6 +1,6 @@
 # **Pastiow Website - Dokumentasi Proyek**  
 
-![Banner Pastiow](https://i.imgur.com/AJ3drf7.png)  
+![Banner Pastiow](https://cdn.ypnk.biz.id/yp/4se5nrb6.png)  
 
 **Website resmi komunitas Pastiow** – Platform semi-dinamis dengan gaya playful & tegas untuk mempromosikan layanan, konten edukatif, dan engagement anggota.  
 
