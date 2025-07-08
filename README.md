@@ -1,7 +1,6 @@
 # **Pastiow Website - Dokumentasi Proyek**  
 
-![Logo Pastiow](<img src="images/logo.png" width="300" alt="Banner Pastiow">)  
-
+![Logo Pastiow](./images/logo.png).
 **Website resmi komunitas Pastiow** – Platform semi-dinamis dengan gaya playful & tegas untuk mempromosikan layanan, konten edukatif, dan engagement anggota.  
 
 ## 🔥 **Fitur Utama**  
