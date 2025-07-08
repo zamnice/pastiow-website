@@ -407,7 +407,7 @@
                     <ul>
                         <li>
                             <span class="material-symbols-outlined">mail</span>
-                            <a href="mailto:hello@pastiow.zone.id">hello@pastiow.zone.id</a>
+                            <a href="mailto:pastiowhq@gmail.com">pastiowhq@gmail.com</a>
                         </li>
                         <li>
                             <span class="material-symbols-outlined">call</span>
@@ -418,7 +418,7 @@
             </div>
             
             <div class="footer-bottom">
-                <p>© 2024 Pastiow.zone.id - All Rights Reserved</p>
+                <p>© 2025 Pastiow.zone.id - All Rights Reserved</p>
                 <div class="legal-links">
                     <a href="/privacy">Kebijakan Privasi</a>
                     <a href="/terms">Syarat & Ketentuan</a>
@@ -428,4 +428,20 @@
     </footer>
 
     <!-- Scripts -->
-    <script src="https://unpkg.com/aos
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="assets/js/darkmode.js"></script>
+    <script src="assets/js/slider.js"></script>
+    <script src="assets/js/faq.js"></script>
+    <script src="assets/js/main.js"></script>
+    <script>
+        AOS.init({
+            duration: 800,
+            easing: 'ease-in-out',
+            once: true
+        });
+        
+        // Tally form script
+        var d=document,w="https://tally.so/widgets/embed.js",v=function(){"undefined"!=typeof Tally?Tally.loadEmbeds():d.querySelectorAll("iframe[data-tally-src]:not([src])").forEach((function(e){e.src=e.dataset.tallySrc}))};if("undefined"!=typeof Tally)v();else if(d.querySelector('script[src="'+w+'"]')==null){var s=d.createElement("script");s.src=w,s.onload=v,s.onerror=v,d.body.appendChild(s);}
+    </script>
+</body>
+</html>
