@@ -11,43 +11,130 @@ $bg-light: #FFF8F0;
 // Breakpoints
 $mobile: 768px;
 
+// Animasi
+@keyframes fadeIn {
+  from { opacity: 0.4; }
+  to { opacity: 1; }
+}
+
 // ==============================================
 // 2. BASE STYLES
 // ==============================================
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 body {
   font-family: 'Poppins', sans-serif;
   color: $text;
-  transition: all 0.3s ease;
   line-height: 1.6;
+  transition: all 0.3s ease;
+  overflow-x: hidden;
 }
 
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+// ==============================================
+// 3. DARK MODE
+// ==============================================
 [data-theme="dark"] {
+  background: $dark;
+  color: $light;
+
   --bg-color: #{$dark};
   --text-color: #{$light};
+  --border-color: #{lighten($dark, 10%)};
 }
 
 // ==============================================
-// 3. COMPONENTS
+// 4. COMPONENTS
 // ==============================================
-// 3.1 Navbar
+// 4.1 Preloader
+.preloader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: $light;
+  display: grid;
+  place-items: center;
+  z-index: 9999;
+
+  img {
+    animation: pulse 1.5s infinite;
+    width: 80px;
+  }
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
+
+// 4.2 Navbar
 .navbar {
   position: sticky;
   top: 0;
   background: rgba($light, 0.95);
+  backdrop-filter: blur(10px);
   box-shadow: 0 2px 10px rgba(0,0,0,0.1);
   z-index: 1000;
+  padding: 15px 0;
+  transition: all 0.3s ease;
+
+  &__container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
 
   &__brand {
     display: flex;
     align-items: center;
+    gap: 10px;
     font-weight: 700;
     font-size: 1.5rem;
     color: $primary;
+    text-decoration: none;
 
     img {
       height: 40px;
-      margin-right: 10px;
     }
+  }
+
+  &__menu {
+    display: flex;
+    gap: 30px;
+
+    @media (max-width: $mobile) {
+      display: none;
+    }
+  }
+
+  &__link {
+    color: $text;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s;
+
+    &:hover {
+      color: $primary;
+    }
+  }
+
+  &__actions {
+    display: flex;
+    align-items: center;
+    gap: 15px;
   }
 
   &__theme-toggle {
@@ -55,15 +142,77 @@ body {
     border: none;
     cursor: pointer;
     color: $primary;
+    font-size: 1.2rem;
+  }
+
+  &__hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+
+    span {
+      display: block;
+      width: 25px;
+      height: 3px;
+      background: $primary;
+      border-radius: 3px;
+      transition: all 0.3s;
+    }
+
+    @media (max-width: $mobile) {
+      display: flex;
+    }
   }
 }
 
-// 3.2 Hero Section
+// 4.3 Mobile Menu
+.mobile-menu {
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: 80%;
+  max-width: 300px;
+  height: 100vh;
+  background: $light;
+  box-shadow: -5px 0 15px rgba(0,0,0,0.1);
+  z-index: 999;
+  padding: 80px 30px;
+  transition: right 0.3s ease;
+
+  &--active {
+    right: 0;
+  }
+
+  &__list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  &__link {
+    color: $text;
+    text-decoration: none;
+    font-size: 1.1rem;
+    font-weight: 500;
+    transition: color 0.3s;
+
+    &:hover {
+      color: $primary;
+    }
+  }
+}
+
+// 4.4 Hero Section
 .hero {
   position: relative;
-  padding: 100px 0;
+  padding: 120px 0;
+  overflow: hidden;
 
-  &__gradient-bg {
+  &__gradient {
     position: absolute;
     top: 0;
     left: 0;
@@ -74,14 +223,29 @@ body {
     opacity: 0.9;
   }
 
-  &__typing-text {
-    font-size: 2.5rem;
+  &__content {
+    max-width: 600px;
+  }
+
+  &__title {
+    font-size: 2.8rem;
     font-weight: 700;
     color: $light;
     margin-bottom: 20px;
+    line-height: 1.2;
+
+    @media (max-width: $mobile) {
+      font-size: 2rem;
+    }
   }
 
-  &__cta-button {
+  &__subtitle {
+    color: rgba($light, 0.9);
+    margin-bottom: 30px;
+    font-size: 1.1rem;
+  }
+
+  &__cta {
     display: inline-block;
     background: $light;
     color: $primary;
@@ -90,26 +254,38 @@ body {
     font-weight: 700;
     text-decoration: none;
     transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
 
     &:hover {
       transform: translateY(-3px);
-      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
     }
   }
 }
 
-// 3.3 Testimonial Slider
+// 4.5 Testimonial Slider
 .testimonial {
-  &__section {
-    background: $bg-light;
-    padding: 60px 0;
+  padding: 80px 0;
+  background: $bg-light;
+
+  &__title {
+    text-align: center;
+    margin-bottom: 50px;
+    color: $text;
+    font-size: 2rem;
+  }
+
+  &__slider {
+    position: relative;
+    max-width: 800px;
+    margin: 0 auto;
   }
 
   &__slide {
     background: $light;
-    padding: 30px;
+    padding: 40px;
     border-radius: 10px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
     text-align: center;
     display: none;
 
@@ -119,76 +295,140 @@ body {
     }
   }
 
-  &__profile-img {
-    width: 60px;
-    height: 60px;
+  &__text {
+    font-size: 1.1rem;
+    margin-bottom: 20px;
+    color: $text;
+    line-height: 1.6;
+  }
+
+  &__profile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  &__avatar {
+    width: 70px;
+    height: 70px;
     border-radius: 50%;
     object-fit: cover;
-    margin: 10px auto;
+    margin-bottom: 10px;
+    border: 3px solid $primary;
+  }
+
+  &__name {
+    font-weight: 700;
+    color: $text;
+  }
+
+  &__role {
+    color: rgba($text, 0.7);
+    font-size: 0.9rem;
+  }
+
+  &__nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 20px;
+  }
+
+  &__button {
+    background: $primary;
+    color: $light;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s;
+
+    &:hover {
+      background: darken($primary, 10%);
+    }
   }
 
   &__dots {
-    text-align: center;
-    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 30px;
   }
 
   &__dot {
-    background: $primary;
-    border-radius: 50%;
     width: 12px;
     height: 12px;
-    margin: 0 5px;
-    opacity: 0.5;
+    border-radius: 50%;
+    background: rgba($primary, 0.3);
+    border: none;
     cursor: pointer;
-    display: inline-block;
+    transition: all 0.3s;
 
     &--active {
-      opacity: 1;
+      background: $primary;
     }
   }
 }
 
-// 3.4 FAQ Accordion
+// 4.6 FAQ Section
 .faq {
+  padding: 80px 0;
+
+  &__title {
+    text-align: center;
+    margin-bottom: 50px;
+    color: $text;
+    font-size: 2rem;
+  }
+
   &__item {
     margin-bottom: 15px;
-    border: 1px solid $primary;
+    border: 1px solid rgba($primary, 0.3);
     border-radius: 8px;
     overflow: hidden;
-    transition: all 0.3s ease;
+    transition: all 0.3s;
   }
 
   &__question {
     width: 100%;
-    padding: 15px 20px;
+    padding: 18px 25px;
     text-align: left;
-    background: rgba($primary, 0.1);
+    background: rgba($primary, 0.05);
     border: none;
     display: flex;
     justify-content: space-between;
     align-items: center;
     cursor: pointer;
     font-weight: 600;
-    color: $dark;
+    color: $text;
+    transition: all 0.3s;
 
     &:hover {
-      background: rgba($primary, 0.2);
+      background: rgba($primary, 0.1);
     }
   }
 
   &__answer {
-    padding: 0 20px;
+    padding: 0 25px;
     max-height: 0;
     overflow: hidden;
     transition: max-height 0.3s ease, padding 0.3s ease;
   }
 
   &__item--active {
+    border-color: $primary;
+
     .faq__answer {
-      padding: 15px 20px;
-      max-height: 300px;
+      padding: 20px 25px;
+      max-height: 500px;
     }
-    
+
     .faq__icon {
       transform: rotate(180deg);
     }
@@ -199,50 +439,192 @@ body {
   }
 }
 
-// 3.5 Form Section
-.form {
-  &__section {
-    background: $primary;
-    color: $light;
+// 4.7 Form Section
+.form-section {
+  padding: 80px 0;
+  background: $primary;
+  color: $light;
+
+  &__title {
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 2rem;
+  }
+
+  iframe {
+    border-radius: 10px;
+    background: $light;
+    min-height: 500px;
+  }
+}
+
+// 4.8 Floating Action Button
+.fab {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  width: 60px;
+  height: 60px;
+  background: $primary;
+  color: $light;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  box-shadow: 0 5px 20px rgba($primary, 0.3);
+  transition: all 0.3s ease;
+  z-index: 100;
+  text-decoration: none;
+
+  &:hover {
+    transform: translateY(-5px) scale(1.1);
+    background: darken($primary, 10%);
+  }
+
+  svg {
+    width: 24px;
+    height: 24px;
+    fill: currentColor;
+  }
+}
+
+// 4.9 Footer
+.footer {
+  background: $dark;
+  color: $light;
+  padding: 60px 0 0;
+
+  &__container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 40px;
+  }
+
+  &__brand {
+    img {
+      filter: brightness(0) invert(1);
+      width: 40px;
+    }
+
+    span {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 700;
+      font-size: 1.5rem;
+      color: $light;
+      display: block;
+      margin: 15px 0 10px;
+    }
+
+    p {
+      color: rgba($light, 0.7);
+      line-height: 1.6;
+    }
+  }
+
+  &__links,
+  &__contact {
+    h3 {
+      color: $primary;
+      margin-bottom: 20px;
+      font-size: 1.2rem;
+    }
+
+    ul {
+      list-style: none;
+    }
+
+    li {
+      margin-bottom: 12px;
+    }
+
+    a {
+      color: rgba($light, 0.8);
+      text-decoration: none;
+      transition: color 0.3s;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+
+      &:hover {
+        color: $primary;
+      }
+    }
+  }
+
+  &__copyright {
+    text-align: center;
+    padding: 20px;
+    margin-top: 60px;
+    border-top: 1px solid rgba($light, 0.1);
+    font-size: 0.9rem;
+    color: rgba($light, 0.6);
+  }
+}
+
+// ==============================================
+// 5. DARK MODE ADJUSTMENTS
+// ==============================================
+[data-theme="dark"] {
+  .navbar {
+    background: rgba($dark, 0.9);
+    box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+  }
+
+  .faq__item {
+    background: rgba($primary, 0.05);
+    border-color: rgba($primary, 0.3);
+  }
+
+  .footer {
+    background: lighten($dark, 5%);
+  }
+}
+
+// ==============================================
+// 6. RESPONSIVE STYLES
+// ==============================================
+@media (max-width: $mobile) {
+  .hero {
+    padding: 100px 0;
+    text-align: center;
+
+    &__title {
+      font-size: 2rem;
+    }
+  }
+
+  .testimonial {
+    padding: 60px 0;
+
+    &__slide {
+      padding: 30px 20px;
+    }
+  }
+
+  .faq {
+    padding: 60px 0;
+
+    &__question {
+      padding: 15px 20px;
+      font-size: 1rem;
+    }
+  }
+
+  .form-section {
     padding: 60px 0;
   }
 
-  &__iframe {
-    border-radius: 10px;
-    background: $light;
-  }
-}
-
-// ==============================================
-// 4. ANIMATIONS & UTILITIES
-// ==============================================
-@keyframes fadeIn {
-  from { opacity: 0.4; }
-  to { opacity: 1; }
-}
-
-// ==============================================
-// 5. MEDIA QUERIES
-// ==============================================
-@media (max-width: $mobile) {
-  .testimonial__slide {
-    padding: 20px;
-  }
-  
-  .faq__question {
-    padding: 12px 15px;
-    font-size: 16px;
-  }
-  
-  .form__section {
-    padding: 40px 0;
+  .fab {
+    width: 50px;
+    height: 50px;
+    bottom: 20px;
+    right: 20px;
   }
 
-  .hero {
-    padding: 80px 0;
-    
-    &__typing-text {
-      font-size: 2rem;
+  .footer {
+    padding: 40px 0 0;
+
+    &__copyright {
+      margin-top: 40px;
     }
   }
 }
